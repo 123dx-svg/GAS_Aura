@@ -7,6 +7,7 @@ Content/Assets
 
 .vscode
 .vs
+.idea
 *.VC.db
 *.opendb
 *.sdf
@@ -14,3 +15,4 @@ Content/Assets
 *.suo
 *.xcodeproj
 *.xcworkspace
+/.idea
