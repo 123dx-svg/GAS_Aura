@@ -7,7 +7,7 @@
 #include "AuraUserWidget.generated.h"
 
 /**
- * 
+ * View层基类
  */
 UCLASS()
 class AURA_API UAuraUserWidget : public UUserWidget
