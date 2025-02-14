@@ -47,6 +47,8 @@ public:
 
 	virtual void BroadcastInitialValues();
 
+	virtual void BindCallbacksToDependencies();
+
 protected:
 	//model层的数据在角色的playerController，playerState，ASC和AS身上
 	UPROPERTY(BlueprintReadOnly,Category="WidgetController")
