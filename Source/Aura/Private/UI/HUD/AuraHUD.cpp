@@ -31,7 +31,9 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	const FWidgetControllerParams WCParams(PC,PS,ASC,AS);
 	UOverlayWidgetController* WidgetController =GetOverlayWidgetController(WCParams);
 
+	//此处蓝图会有个回调函数
 	OverlayWidget->SetWidgetController(WidgetController);
+	WidgetController->BroadcastInitialValues();
 	
 	Widget->AddToViewport();
 }
