@@ -74,7 +74,10 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Applied Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy{EEffectRemovalPolicy::RemoveOnEndOverlap};
 
+	//存储所有的效果句柄和对应的ASC
 	TMap<FActiveGameplayEffectHandle,UAbilitySystemComponent*> ActiveEffectHandles;
 
-	
+	//对应曲线表格中的级别
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Applied Effects")
+	float ActorLevel{1.f};
 };
