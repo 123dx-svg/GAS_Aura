@@ -24,6 +24,20 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet,MaxMana,COND_None,REPNOTIFY_Always);
 }
 
+void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
+{
+	Super::PreAttributeChange(Attribute, NewValue);
+	//通过属性预修改来限定属性值
+	if (Attribute == GetHealthAttribute())
+	{
+		NewValue=FMath::Clamp<float>(NewValue,0.f,GetMaxHealth());
+	}
+	if (Attribute == GetManaAttribute())
+	{
+		NewValue=FMath::Clamp<float>(NewValue,0.f,GetMaxMana());
+	}
+}
+
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {
 	//让GAS知道该属性刚刚被复制 处理将由客户端预测性修改的属性 有问题服务器可以撤销修改
