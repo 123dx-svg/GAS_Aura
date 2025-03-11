@@ -1,0 +1,5 @@
+---,MessageTag,MessageText,MessageWidget,Image
+Message.HealthCrystal,"(TagName=""Message.HealthCrystal"")",拾取生命水晶,None,/Script/Engine.Texture2D'/Game/Assets/UI/Pickups/T_HealthCrystal.T_HealthCrystal'
+Message.HealthPotion,"(TagName=""Message.HealthPotion"")",拾取生命药水,None,/Script/Engine.Texture2D'/Game/Assets/UI/Pickups/T_Potion_Red.T_Potion_Red'
+Message.ManaCrystal,"(TagName=""Message.ManaCrystal"")",拾取魔法水晶,None,/Script/Engine.Texture2D'/Game/Assets/UI/Pickups/T_ManaCrystal.T_ManaCrystal'
+Message.ManaPotion,"(TagName=""Message.ManaPotion"")",拾取魔法药水,None,/Script/Engine.Texture2D'/Game/Assets/UI/Pickups/T_Potion_Blue.T_Potion_Blue'
