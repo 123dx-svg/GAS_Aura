@@ -32,7 +32,7 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
-	//通过属性预修改来限定属性值
+	//通过属性预修改来限定属性值  这里设置的是Current值  而不是Base版本 要真正修改Base版本需要用PreAttributeChangeBase 但是这里在PostGameplayEffectExecute中修改了(这样保证了值不会向客户端复制两遍)
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue=FMath::Clamp<float>(NewValue,0.f,GetMaxHealth());
@@ -86,6 +86,16 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 	FEffectProperties Props;
 	SetEffectProperties(Data,Props);
 
+	//修复BUG  因为PreAttributeChange只修改了Current值  而不是Base值  所以这里要修改Base值
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp<float>(GetHealth(),0.f,GetMaxHealth()));
+	}
+
+	if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp<float>(GetMana(),0.f,GetMaxMana()));
+	}
 	
 }
 
