@@ -14,12 +14,6 @@ GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
-//将属性定义为宏
-#define ATTRIBUTE_DEFINE(ClassName, PropertyName, CategoryName) \
-UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_##PropertyName, Category=CategoryName) \
-FGameplayAttributeData PropertyName; \
-ATTRIBUTE_ACCESSORS(ClassName, PropertyName)
-
 
 USTRUCT()
 struct FEffectProperties
@@ -67,15 +61,12 @@ public:
 	UAuraAttributeSet();
 	//所有网络复制的值都必须
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
-
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 	
-
 	/*
 	*Primary Attributes
 	*/
-	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category="Primary Attributes") 
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength)
@@ -148,6 +139,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category="Vital Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana)
+
 	
 
 
