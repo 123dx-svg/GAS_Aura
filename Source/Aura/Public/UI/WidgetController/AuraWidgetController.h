@@ -44,9 +44,10 @@ public:
 	//方便赋值用
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
-
+	//用于广播初始值
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitialValues();
-
+	//用于广播所有值的函数
 	virtual void BindCallbacksToDependencies();
 
 protected:
