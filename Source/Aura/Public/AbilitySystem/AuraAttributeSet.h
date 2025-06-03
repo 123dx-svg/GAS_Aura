@@ -14,6 +14,8 @@ GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+//使用了高级委托方式
+// DECLARE_DELEGATE_RetVal(FGameplayAttribute,FAttributeSignature)
 
 USTRUCT()
 struct FEffectProperties
@@ -48,6 +50,11 @@ struct FEffectProperties
 	ACharacter* TargetCharacter = nullptr;
 	
 };
+//取别名不够通用
+//typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr  FAttributeFuncPtr;
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
 
 //调试命令 showdebug abilitysystem
 /**
@@ -82,9 +89,11 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vigor, Category="Primary Attributes")
 	FGameplayAttributeData Vigor;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor)
-	
-	
-	
+
+	//属性标签到属性的映射
+	TMap<FGameplayTag,TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+	//示范使用接受静态函数的委托
+	//TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr InFuncPtr;
 	/*
 	 *Secondary Attributes
 	 */
