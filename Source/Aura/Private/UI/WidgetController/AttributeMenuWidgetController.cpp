@@ -2,13 +2,21 @@
 
 
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
-
-#include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include"AbilitySystem/Data/AttributeInfo.h"
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
+	//将数值变化应用到属性菜单上
+	UAuraAttributeSet* AS = CastChecked<UAuraAttributeSet>(AttributeSet);
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value())
+		.AddLambda([this, Pair](const FOnAttributeChangeData& Data)
+		{
+			BroadcastAttributeInfo(Pair.Key,Pair.Value());
+		});
+	}
 	
 }
 
@@ -20,9 +28,15 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 	//不用关心具体属性直接遍历所有属性
 	for (auto& Pair : AS->TagsToAttributes)
 	{
-		FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(Pair.Key);
-		Info.AttributeValue = Pair.Value().GetNumericValue(AS);
-		AttributeInfoDelegate.Broadcast(Info);
+		BroadcastAttributeInfo(Pair.Key,Pair.Value());
 	}
 	
+}
+
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag,
+	const FGameplayAttribute& Attribute) const
+{
+	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
+	AttributeInfoDelegate.Broadcast(Info);
 }
